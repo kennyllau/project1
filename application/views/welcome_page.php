@@ -3,8 +3,7 @@
 <head>
 	<title>Welcome</title>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
-	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyDlXCmTDNweHII0d4AtShhVLzwBptXmYog&callback"
-   async defer></script>
+	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyDlXCmTDNweHII0d4AtShhVLzwBptXmYog"></script>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 	<!-- Optional theme -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
@@ -59,6 +58,8 @@
 						var to = destinations[j];
 					}
 					// console.log(duration);
+
+					console.log(results[0].duration.value);
 				}
 			}
 		}
@@ -68,11 +69,9 @@
 			var origin = $('#a').val();
 			var destination = $('#b').val();
 
-			// console.log(origin);
-			// console.log(destination);
-
 			var service = new google.maps.DistanceMatrixService();
 			service.getDistanceMatrix({
+					
 
 				    origins: [origin],
 				    destinations: [destination],
@@ -82,13 +81,24 @@
 					    trafficModel: "pessimistic"
 					  }
 				  }, callback);
-
-			// console.log(duration);
 			return false;
-
-			// $.get('')
 		});
 
+
+		// function initialize() {
+		//   var mapProp = {
+		//     center:new google.maps.LatLng(51.508742,-0.120850),
+		//     zoom:5,
+		//     mapTypeId:google.maps.MapTypeId.ROADMAP
+		//   };
+
+
+		//   var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
+		// }
+
+
+
+		// google.maps.event.addDomListener(window, 'load', initialize);
 
 
 
@@ -183,15 +193,15 @@
 				                        <div class="form-group">    
 				                            <div class="checkbox">
 				                            	
-				                                <label class="genre"><input type="checkbox">Electronic </label>
-				                                <label class="genre"><input type="checkbox">Pop/Rock </label>
-				                                <label class="genre"><input type="checkbox">R&B</label>
-				                                <label class="genre"><input type="checkbox">Rap</label>
-				                                <label class="genre"><input type="checkbox">Country</label>
-				                                <label class="genre"><input type="checkbox">Hip-hop</label>
-				                                <label class="genre"><input type="checkbox">Jazz</label>
-				                                <label class="genre"><input type="checkbox">Classical</label>
-				                                <label class="genre"><input type="checkbox">Reggae</label>			
+				                                <label class="genre"><input type="checkbox" checked>Electronic </label>
+				                                <label class="genre"><input type="checkbox" checked>Pop/Rock </label>
+				                                <label class="genre"><input type="checkbox" checked>R&B</label>
+				                                <label class="genre"><input type="checkbox" checked>Rap</label>
+				                                <label class="genre"><input type="checkbox" checked>Country</label>
+				                                <label class="genre"><input type="checkbox" checked>Hip-hop</label>
+				                                <label class="genre"><input type="checkbox" checked>Jazz</label>
+				                                <label class="genre"><input type="checkbox" checked>Classical</label>
+				                                <label class="genre"><input type="checkbox" checked>Reggae</label>			
 				                             	     
 				                            </div>
 				                             
@@ -236,19 +246,23 @@
 		    	<h1>media player</h1>
 		    	</div>
 		    </div>
+
 		
+		<!-- <div id="googleMap" style="width:500px;height:380px;" class="center-block"></div> -->
+		
+
 		</div> <!-- container for banner -->
 	</div> <!-- end of page-content -->
 <br><br><br><br><br><br><br><br><br><br><br><br><br>
 	<div class="row">
 		<div class="col-xs-12 text-center">
-			<i class="fa fa-twitter fa-4x" aria-hidden="true"></i>
-			<i class="fa fa-facebook fa-4x" aria-hidden="true"></i>
-			<i class="fa fa-pinterest fa-4x" aria-hidden="true"></i>
-			<i class="fa fa-soundcloud fa-4x" aria-hidden="true"></i>
-			<i class="fa fa-youtube fa-4x" aria-hidden="true"></i>
-			<i class="fa fa-vimeo-square fa-4x" aria-hidden="true"></i>
-			<i class="fa fa-instagram fa-4x" aria-hidden="true"></i>
+			<i class="fa fa-twitter fa-3x" aria-hidden="true"></i>
+			<i class="fa fa-facebook fa-3x" aria-hidden="true"></i>
+			<i class="fa fa-pinterest fa-3x" aria-hidden="true"></i>
+			<i class="fa fa-soundcloud fa-3x" aria-hidden="true"></i>
+			<i class="fa fa-youtube fa-3x" aria-hidden="true"></i>
+			<i class="fa fa-vimeo-square fa-3x" aria-hidden="true"></i>
+			<i class="fa fa-instagram fa-3x" aria-hidden="true"></i>
 		</div>
 	</div>
 </div>  <!-- end of wrapper -->
