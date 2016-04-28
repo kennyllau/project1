@@ -4,16 +4,28 @@
 	<title>Welcome</title>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
 	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyDlXCmTDNweHII0d4AtShhVLzwBptXmYog"></script>
+	<!-- <script src="//connect.soundcloud.com/sdk.js"></script> -->
+
+	<script src="https://connect.soundcloud.com/sdk/sdk-3.0.0.js"></script>
+	<!-- <script src="https://w.soundcloud.com/player/api.js"></script> -->
+
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 	<!-- Optional theme -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
 	<!-- Latest compiled and minified JavaScript -->
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
-	<link rel="stylesheet"  type="text/css" href="assets/welcome.css">
+	<link rel="stylesheet"  type="text/css" href="/assets/welcome1.css">
 
 	<script>
 		$(document).ready(function(){
+
+				SC.initialize({
+				  client_id: 'cc9fc24f96eb6758a83cf9c794b11a19'
+				});
+
+		var music_sec = 0;
+
 
 	  	var trigger = $('.hamburger'),
      	overlay = $('.overlay'),
@@ -47,6 +59,9 @@
 				var origins = response.originAddresses;
 				var destinations = response.destinationAddresses;
 
+				var music_genre = "'"+$('input:checked').val()+"'";
+
+
 				for (var i = 0; i < origins.length; i++){
 					var results = response.rows[i].elements;
 
@@ -57,11 +72,45 @@
 						var from = origins[i];
 						var to = destinations[j];
 					}
-					// console.log(duration);
 
-					console.log(results[0].duration.value);
+
+					music_sec = results[0].duration.value;
+					console.log(music_genre);
+					console.log(music_sec);
+
+						
 				}
+
+				
+
+				SC.get('/playlists', {
+					 
+					q: music_genre,
+
+					}).then(function(tracks) {
+
+						var random_playlist = Math.floor(Math.random()*tracks.length);
+
+						console.log(random_playlist);
+						console.log(tracks.length);
+
+						for ( var i = 0; i < tracks.length; i++){
+					  
+
+
+
+					  $('#sc-widget').attr('src','https://w.soundcloud.com/player/?url='+tracks[random_playlist].permalink_url+'&auto_play=true');
+					};
+
+				});
+
+
+
 			}
+		}
+
+		function get_sc_music(music_sec){
+
 		}
 
 
@@ -85,6 +134,8 @@
 		});
 
 
+
+
 		// function initialize() {
 		//   var mapProp = {
 		//     center:new google.maps.LatLng(51.508742,-0.120850),
@@ -100,13 +151,66 @@
 
 		// google.maps.event.addDomListener(window, 'load', initialize);
 
+		
+
+		// SC.initialize({
+		// 	  client_id: 'cc9fc24f96eb6758a83cf9c794b11a19',
+		// 	  redirect_uri: ''
+		// 	});
+
+			// initiate auth popup
+		// SC.connect().then(function() {
+		//   return SC.get('/me');
+		// }).then(function(me) {
+		//   alert('Hello, ' + me.username);
+		// });
+
+		
+		// $.get('https://api.soundcloud.com/tracks?client_id=cc9fc24f96eb6758a83cf9c794b11a19', function(res){
+
+
+		// 	console.log(res);
+		// });
+
+		// var iframeElement   = document.querySelector('iframe');
+		// var iframeElementID = iframeElement.id;
+		// var widget1         = SC.Widget(iframeElement);
+		// var widget2         = SC.Widget(iframeElementID);
+
+
+		// $("#mp").append(
+		// 	var track_url = 'https://soundcloud.com/charles-hardy-music/the-blue';
+		// 	SC.oEmbed(track_url, { auto_play: true }).then(function(oEmbed) {
+		// 	 console.log('oEmbed response: ', oEmbed);
+		// 	})
+		// 			);
 
 
 
+			// SC.initialize({
+			// 	  client_id: 'cc9fc24f96eb6758a83cf9c794b11a19'
+			// 	});
 
+				
+				// SC.get('/tracks', {
+				//   genres: 'music_genre'
+				// }).then(function(tracks) {
+				// 	for ( var i = 0; i < tracks.length; i++){
+				//   console.log(tracks[i]);
+				// };
+				// });
+
+				
 		});
+
+
+
+
+
 	</script>
-<!-- AIzaSyDlXCmTDNweHII0d4AtShhVLzwBptXmYog -->	
+
+	
+
 </head>
 <body>
 
@@ -118,7 +222,7 @@
         <ul class="nav sidebar-nav">
             <li class="sidebar-brand">
                 <a href="#">
-                   Trip's History
+                   <?= ucfirst($this->session->userdata['first_name']) ?>'s History
                 </a>
             </li>
             <li>
@@ -152,6 +256,9 @@
                 <li><a href="#">One more separated link</a></li>
               </ul>
             </li>
+             <li>
+                <a href="/main/destroy">Sign Out</a>
+            </li>
             
            
         </ul>
@@ -162,6 +269,8 @@
     <div id="page-content-wrapper">
         <button type="button" class="hamburger is-closed" data-toggle="offcanvas">
             <span class="hamb-top"></span>
+
+
 			<span class="hamb-middle"></span>
 			<span class="hamb-bottom"></span>
         </button>
@@ -191,17 +300,19 @@
 				                    <form class="form-inline" role="form">
 
 				                        <div class="form-group">    
-				                            <div class="checkbox">
+				                            <div class="radio">
 				                            	
-				                                <label class="genre"><input type="checkbox" checked>Electronic </label>
-				                                <label class="genre"><input type="checkbox" checked>Pop/Rock </label>
-				                                <label class="genre"><input type="checkbox" checked>R&B</label>
-				                                <label class="genre"><input type="checkbox" checked>Rap</label>
-				                                <label class="genre"><input type="checkbox" checked>Country</label>
-				                                <label class="genre"><input type="checkbox" checked>Hip-hop</label>
-				                                <label class="genre"><input type="checkbox" checked>Jazz</label>
-				                                <label class="genre"><input type="checkbox" checked>Classical</label>
-				                                <label class="genre"><input type="checkbox" checked>Reggae</label>			
+				                                <label class="genre"><input type="radio" name="genre" value="electronic"> Electronic </label>
+				                                <label class="genre"><input type="radio" name="genre" value="Pop"> Pop </label>
+				                                <label class="genre"><input type="radio" name="genre" value="Rock"> Rock </label>
+				                                <label class="genre"><input type="radio" name="genre" value="R&B"> R&B</label>
+				                                <label class="genre"><input type="radio" name="genre" value="kanye taylor swift"> Rap</label>
+				                                <label class="genre"><input type="radio" name="genre" value="Country"> Country</label>
+				                                <label class="genre"><input type="radio" name="genre" value="Hip-hop"> Hip-hop</label>
+				                                <label class="genre"><input type="radio" name="genre" value="Jazz"> Jazz</label>
+				                                <label class="genre"><input type="radio" name="genre" value="Classical"> Classical</label>
+				                                <label class="genre"><input type="radio" name="genre" value="Reggae"> Reggae</label>	
+				                                <label class="genre"><input type="radio" name="genre" value="Dance"> Dance</label>			
 				                             	     
 				                            </div>
 				                             
@@ -211,7 +322,7 @@
 				            </div>
 				        </div>    
 				        <button type="button" class="button" data-toggle="collapse" data-target="#filter-panel">
-				            <span class="glyphicon glyphicon-music"></span> Select Genres
+				            <span class="glyphicon glyphicon-music"></span> Select Genre
 				        </button>
 				        </div>
 					</div>
@@ -242,19 +353,40 @@
 
 		    
 		    <div class="row">
-		    	<div class="col-xs-12 text-center" id="media_player">
+		    	<div class="col-xs-8 col-xs-offset-2 text-center" id="media_player">
 		    	<h1>media player</h1>
+			    	<iframe id="sc-widget" src="" width="100%" height="465" scrolling="no" frameborder="no" ></iframe>
+					<!-- <iframe id="sc-widget" src="https://w.soundcloud.com/player/?url=https://api.soundcloud.com/users/47341101/favorites" width="100%" height="465" scrolling="no" frameborder="no"></iframe> -->
+			    	
+
+
+					<script src="https://w.soundcloud.com/player/api.js" type="text/javascript"></script>
+					<script type="text/javascript">
+					  (function(){
+					    var widgetIframe = document.getElementById('sc-widget'),
+					        widget       = SC.Widget(widgetIframe);
+
+					    widget.bind(SC.Widget.Events.READY, function() {
+					      widget.bind(SC.Widget.Events.PLAY, function() {
+					        // get information about currently playing sound
+					        widget.getCurrentSound(function(currentSound) {
+					          console.log('sound ' + currentSound.get('') + 'began to play');
+					        });
+					      });
+					      // get current level of volume
+					      widget.getVolume(function(volume) {
+					        console.log('current volume value is ' + volume);
+					      });
+					      // set new volume level
+					      widget.setVolume(50);
+					      // get the value of the current position
+					    });
+
+					  }());
+					</script>
 		    	</div>
 		    </div>
-
-		
-		<!-- <div id="googleMap" style="width:500px;height:380px;" class="center-block"></div> -->
-		
-
-		</div> <!-- container for banner -->
-	</div> <!-- end of page-content -->
-<br><br><br><br><br><br><br><br><br><br><br><br><br>
-	<div class="row">
+		    <div class="row">
 		<div class="col-xs-12 text-center">
 			<i class="fa fa-twitter fa-3x" aria-hidden="true"></i>
 			<i class="fa fa-facebook fa-3x" aria-hidden="true"></i>
@@ -265,6 +397,16 @@
 			<i class="fa fa-instagram fa-3x" aria-hidden="true"></i>
 		</div>
 	</div>
+
+		  
+		
+		<!-- <div id="googleMap" style="width:500px;height:380px;" class="center-block"></div> -->
+		
+
+		</div> <!-- container for banner -->
+	</div> <!-- end of page-content -->
+
+	
 </div>  <!-- end of wrapper -->
 </body>
 </html>

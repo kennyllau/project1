@@ -325,7 +325,7 @@ svg {
 }
 
 /*#background{
-  background-image: url('traveling.jpg');
+  background-image: url('city.jpg');
   background-position: center;
   height: 250px;
 }*/
@@ -428,6 +428,7 @@ a.button2:hover {
     padding-right:10px;
 }
 
-.checkbox label{
-  margin: 0px 15px 0px 0px;
+.genre{
+  margin: 0px 15px 0px 15px;
+  padding-left: 2px;
 }
