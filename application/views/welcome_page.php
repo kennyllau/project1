@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html>
 <head>
@@ -18,6 +19,11 @@
 	<link rel="stylesheet"  type="text/css" href="/assets/welcome1.css">
 
 	<script>
+		function pauseMusic(){
+			window.widget.pause();
+		};
+
+
 		$(document).ready(function(){
 
 				SC.initialize({
@@ -54,6 +60,7 @@
 		    $('#wrapper').toggleClass('toggled');
 		  	}); 
 
+
 		function callback(response, status){
 			if (status == google.maps.DistanceMatrixStatus.OK){
 				var origins = response.originAddresses;
@@ -78,6 +85,20 @@
 					console.log(music_genre);
 					console.log(music_sec);
 
+
+					function myTimer() {
+					  document.getElementById("head1").innerHTML = d--;
+					}
+					var d = music_sec;
+					var myVar = setInterval(function() {
+					  myTimer()
+					}, 1000);
+					// setTimeout($('iframe .playButton__overlay').click(),8000);
+
+					setTimeout(function(){
+						location = '/main/trip'
+					},music_sec*1000)
+			
 						
 				}
 
@@ -95,14 +116,42 @@
 						console.log(tracks.length);
 
 						for ( var i = 0; i < tracks.length; i++){
+							};
 					  
 
 
+					  $('#playlist_name').attr('value', tracks[random_playlist].title);
+					  						console.log($('#playlist_name').val());
+
+					  			
+					  $('#playlist_link').attr('value', tracks[random_playlist].permalink_url);
+					  						console.log($('#playlist_link').val());
 
 					  $('#sc-widget').attr('src','https://w.soundcloud.com/player/?url='+tracks[random_playlist].permalink_url+'&auto_play=true');
-					};
+
+
+						var iframeElement   = document.querySelector('iframe');
+						var iframeElementID = iframeElement.id;
+						var widget1         = SC.Widget(iframeElement);
+						var widget2         = SC.Widget(iframeElementID);
+
+
+
+
+			console.log(widget);	
+			console.log(widget1);	
+			console.log(widget2);	
+			console.log(SC.widget);	
+
+
+
+
+					  
 
 				});
+
+	
+			
 
 
 
@@ -130,8 +179,18 @@
 					    trafficModel: "pessimistic"
 					  }
 				  }, callback);
+
+
+				$.post('/travels/add_destination', $(this).serialize(), function(res){
+					// console.log(res);
+
+				});
+
+
 			return false;
 		});
+
+
 
 
 
@@ -152,19 +211,6 @@
 		// google.maps.event.addDomListener(window, 'load', initialize);
 
 		
-
-		// SC.initialize({
-		// 	  client_id: 'cc9fc24f96eb6758a83cf9c794b11a19',
-		// 	  redirect_uri: ''
-		// 	});
-
-			// initiate auth popup
-		// SC.connect().then(function() {
-		//   return SC.get('/me');
-		// }).then(function(me) {
-		//   alert('Hello, ' + me.username);
-		// });
-
 		
 		// $.get('https://api.soundcloud.com/tracks?client_id=cc9fc24f96eb6758a83cf9c794b11a19', function(res){
 
@@ -172,10 +218,6 @@
 		// 	console.log(res);
 		// });
 
-		// var iframeElement   = document.querySelector('iframe');
-		// var iframeElementID = iframeElement.id;
-		// var widget1         = SC.Widget(iframeElement);
-		// var widget2         = SC.Widget(iframeElementID);
 
 
 		// $("#mp").append(
@@ -186,28 +228,14 @@
 		// 			);
 
 
-
-			// SC.initialize({
-			// 	  client_id: 'cc9fc24f96eb6758a83cf9c794b11a19'
-			// 	});
-
-				
-				// SC.get('/tracks', {
-				//   genres: 'music_genre'
-				// }).then(function(tracks) {
-				// 	for ( var i = 0; i < tracks.length; i++){
-				//   console.log(tracks[i]);
-				// };
-				// });
-
-				
 		});
 
-
+	
 
 
 
 	</script>
+
 
 	
 
@@ -222,20 +250,13 @@
         <ul class="nav sidebar-nav">
             <li class="sidebar-brand">
                 <a href="#">
-                   <?= ucfirst($this->session->userdata['first_name']) ?>'s History
+                   <?= ucfirst($this->session->userdata['first_name']) ?>
                 </a>
-            </li>
-            <li>
-                <a href="#">Home</a>
-            </li>
-            <li>
-                <a href="#">About</a>
-            </li>
-            <li>
-                <a href="#">Events</a>
+
+             
             </li>
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dates <span class="caret"></span></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Trip 2 <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
                 <li class="dropdown-header">Dropdown heading</li>
                 <li><a href="#">Action</a></li>
@@ -279,7 +300,7 @@
 			<div class="row" id="background">
 				<svg viewBox="0 0 960 300">
 				    <symbol id="s-text">
-						<text text-anchor="middle" x="50%" y="80%">Trippy advisor </text>
+						<text text-anchor="middle" x="50%" y="80%" id="head1">PROJECT: SOUND</text>
 					</symbol>
 					<g class = "g-ants">
 						<use xlink:href="#s-text" class="text-copy"></use>
@@ -306,7 +327,7 @@
 				                                <label class="genre"><input type="radio" name="genre" value="Pop"> Pop </label>
 				                                <label class="genre"><input type="radio" name="genre" value="Rock"> Rock </label>
 				                                <label class="genre"><input type="radio" name="genre" value="R&B"> R&B</label>
-				                                <label class="genre"><input type="radio" name="genre" value="kanye taylor swift"> Rap</label>
+				                                <label class="genre"><input type="radio" name="genre" value="Rap"> Rap</label>
 				                                <label class="genre"><input type="radio" name="genre" value="Country"> Country</label>
 				                                <label class="genre"><input type="radio" name="genre" value="Hip-hop"> Hip-hop</label>
 				                                <label class="genre"><input type="radio" name="genre" value="Jazz"> Jazz</label>
@@ -329,24 +350,21 @@
 
 
 				<div class="row">
-					<div class="col-xs-6 text-center">
-						<form id="form1" action="" method="">
+					<div class="col-xs-12 text-center">
+						<form id="form1" action="/travels/add_destination" method="post">
 			    			<input  id="a" type="text" placeholder="start" name="origin"></input>
 			    			<input id="b" type="text" placeholder="destination" name="destination"></input>
+			    			<input type="hidden" id="playlist_name" name="playlist_name" value="a"></input>
+			    			<input type="hidden" id="playlist_link" name="playlist_link" value="a"></input>
 			    			<button type="submit" class="button"><span class="glyphicon glyphicon-road"></span> Start Trip
 			    			</button>
 			    		</form>
+			    		  <p id="timer"></p>
+
 		    		</div>
 
 
-		    		<div class="col-xs-6 text-center">
-			    		<form action="" method="">
-			    			<p><label>Set Timer In Minutes</label></p>
-			    			<input type="number"  name="time_limit" min="10" max="720" ></input>
-			    			<button type="submit" class="button"><span class="glyphicon glyphicon-time"></span> Start Time
-			    			</button>
-			    		</form>
-		    		</div>
+		    		
 		    	</div>
 
 
@@ -360,9 +378,9 @@
 			    	
 
 
-					<script src="https://w.soundcloud.com/player/api.js" type="text/javascript"></script>
+					<!-- <script src="https://w.soundcloud.com/player/api.js" type="text/javascript"></script>
 					<script type="text/javascript">
-					  (function(){
+					 (function(){
 					    var widgetIframe = document.getElementById('sc-widget'),
 					        widget       = SC.Widget(widgetIframe);
 
@@ -383,7 +401,7 @@
 					    });
 
 					  }());
-					</script>
+					</script> -->
 		    	</div>
 		    </div>
 		    <div class="row">
