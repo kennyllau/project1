@@ -12,11 +12,31 @@
 
 	<!-- Latest compiled and minified JavaScript -->
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+	<style type="text/css">
+	body{
+		background-image: url('/assets/SkyBackground.png');
+
+	}
+
+	#box{
+		background-color: white;
+		padding: 20px;
+		border-radius: 10px;
+		margin: 20px;
+		border: 1px solid black;
+	
+	}
+
+
+</style>
 </head>
+
+
 <body>
 <div class="container">
 	<div class="row">
-	<div class="col-xs-2 col-xs-offset-5 text-center">
+	<div class="col-xs-4 col-xs-offset-4 text-center" >
+		<div id="box">
 			<form role="form" action="/registers/add" method="post" >
 				<h3>Register</h3>
 				<div class="form-group">
@@ -41,7 +61,7 @@
 				</div>
 				<button type="submit" class="btn btn-primary">Register</button>	
 			</form>
-
+		</div>
 	</div>
 	</div>
 	<div class="row">

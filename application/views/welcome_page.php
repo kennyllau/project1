@@ -181,14 +181,31 @@
 				  }, callback);
 
 
-				$.post('/travels/add_destination', $(this).serialize(), function(res){
-					// console.log(res);
+				// $.post('/travels/add_destination', $(this).serialize(), function(res){
+				// 	// console.log(res);
 
-				});
+				// });
 
 
 			return false;
+
 		});
+
+		$('#form2').submit(function(){
+			var origin = $('#a').val();
+			var destination = $('#b').val();
+			var pl_name = $('#playlist_name').val();
+			var pl_link = $('#playlist_link').val();
+
+			$.post('/travels/add_destination', $(this).serialize(), function(res){
+				// 	// console.log(res);
+
+				});
+			$('.dropdown-header').html(origin+" - "+destination);
+			$('.dropdown-menu').append("<li><a href ='"+pl_link+"'>"+pl_name+"</a></li>");
+
+			return false;
+		})
 
 
 
@@ -256,25 +273,10 @@
              
             </li>
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Trip 2 <span class="caret"></span></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">History<span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
-                <li class="dropdown-header">Dropdown heading</li>
-                <li><a href="#">Action</a></li>
-                <li><a href="#">Another action</a></li>
-                <li><a href="#">Something else here</a></li>
-                <li><a href="#">Separated link</a></li>
-                <li><a href="#">One more separated link</a></li>
-              </ul>
-            </li>
-            <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dispensaries <span class="caret"></span></a>
-              <ul class="dropdown-menu" role="menu">
-                <li class="dropdown-header">Dropdown heading</li>
-                <li><a href="#">Action</a></li>
-                <li><a href="#">Another action</a></li>
-                <li><a href="#">Something else here</a></li>
-                <li><a href="#">Separated link</a></li>
-                <li><a href="#">One more separated link</a></li>
+                <li class="dropdown-header">Your Trip</li>
+                <li><a href="#">Playlist Links</a></li>
               </ul>
             </li>
              <li>
@@ -300,7 +302,7 @@
 			<div class="row" id="background">
 				<svg viewBox="0 0 960 300">
 				    <symbol id="s-text">
-						<text text-anchor="middle" x="50%" y="80%" id="head1">PROJECT: SOUND</text>
+						<text text-anchor="middle" x="50%" y="80%" id="head1">project: sound</text>
 					</symbol>
 					<g class = "g-ants">
 						<use xlink:href="#s-text" class="text-copy"></use>
@@ -351,16 +353,25 @@
 
 				<div class="row">
 					<div class="col-xs-12 text-center">
-						<form id="form1" action="/travels/add_destination" method="post">
-			    			<input  id="a" type="text" placeholder="start" name="origin"></input>
+						<form id="form1" action="" method="post">
+			    			<!-- <input  id="a" type="text" placeholder="start" name="origin"></input>
 			    			<input id="b" type="text" placeholder="destination" name="destination"></input>
 			    			<input type="hidden" id="playlist_name" name="playlist_name" value="a"></input>
-			    			<input type="hidden" id="playlist_link" name="playlist_link" value="a"></input>
+			    			<input type="hidden" id="playlist_link" name="playlist_link" value="a"></input> -->
 			    			<button type="submit" class="button"><span class="glyphicon glyphicon-road"></span> Start Trip
 			    			</button>
 			    		</form>
-			    		  <p id="timer"></p>
 
+
+			    		  <form id="form2" action="/travels/add_destination" method="post">
+			    		  <input  id="a" type="text" placeholder="start" name="origin"></input>
+			    			<input id="b" type="text" placeholder="destination" name="destination"></input>
+			    			<input type="hidden" id="playlist_name" name="playlist_name" value="a"></input>
+			    			<input type="hidden" id="playlist_link" name="playlist_link" value="a"></input>
+			    			<hr>
+							<button type="submit" class="button"><span class="glyphicon glyphicon-list"></span> Save to History
+			    			</button>
+			    		  </form>
 		    		</div>
 
 
@@ -372,7 +383,6 @@
 		    
 		    <div class="row">
 		    	<div class="col-xs-8 col-xs-offset-2 text-center" id="media_player">
-		    	<h1>media player</h1>
 			    	<iframe id="sc-widget" src="" width="100%" height="465" scrolling="no" frameborder="no" ></iframe>
 					<!-- <iframe id="sc-widget" src="https://w.soundcloud.com/player/?url=https://api.soundcloud.com/users/47341101/favorites" width="100%" height="465" scrolling="no" frameborder="no"></iframe> -->
 			    	

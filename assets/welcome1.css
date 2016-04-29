@@ -1,7 +1,7 @@
 body {
     position: relative;
     overflow-x: hidden;
-    background-color: white;
+    background-image: url('/assets/SkyBackground.png');
 
 }
 body,
@@ -345,7 +345,7 @@ svg {
 }
 
 .text-copy:nth-child(2){
-  stroke: #3C948B;
+  stroke: white;
   animation-delay: -2s;
 }
 
@@ -355,7 +355,7 @@ svg {
 }
 
 .text-copy:nth-child(4){
-  stroke: #3C948B;
+  stroke: white;
   animation-delay: -4s;
 }
 
